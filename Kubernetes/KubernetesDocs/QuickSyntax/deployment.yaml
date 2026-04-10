@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deploy # req
+  namespace: default # opt
+  labels: # opt
+    app: nginx
+spec:
+  selector: # req
+    matchLabels:
+      app: nginx
+  template: # req
+    metadata:
+      labels: # req
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.25
+  replicas: 3 # opt (def:1)
+  strategy: # opt
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  minReadySeconds: 10 # opt
+  revisionHistoryLimit: 5 # opt
+  paused: false # opt
+

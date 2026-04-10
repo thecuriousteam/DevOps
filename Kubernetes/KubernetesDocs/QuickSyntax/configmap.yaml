@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-config # req
+  namespace: default # opt
+  labels: # opt
+    app: nginx
+data: # opt*
+  APP_ENV: "production" # key-value
+  LOG_LEVEL: "info"
+  config.yaml: | # file content
+    host: localhost
+    port: 8080
+binaryData: # opt
+  icon.png: SGVsbG8= # base64
+immutable: false # opt
+
+
+# Use in Pod:
+# envFrom:
+#  - configMapRef:
+#      name: my-config
+# or as volume:
+# volumes:
+#  - name: cfg
+#    configMap:
+#      name: my-config

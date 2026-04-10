@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod # req
+  namespace: default # opt
+  labels: # opt
+    app: nginx
+  annotations: # opt
+    note: "value"
+spec:
+  containers: # req
+    - name: nginx # req
+      image: nginx:1.25 # req
+      ports: # opt
+        - containerPort: 80
+      env: # opt
+        - name: KEY
+          value: "val"
+      envFrom: # opt
+        - configMapRef:
+            name: my-cm
+        - secretRef:
+            name: my-sec
+      resources: # opt
+        requests:
+          cpu: "250m"
+          memory: "128Mi"
+        limits:
+          cpu: "500m"
+          memory: "256Mi"
+      volumeMounts: # opt
+        - name: data
+          mountPath: /data
+      livenessProbe: # opt
+        httpGet:
+          path: /health
+          port: 80
+      readinessProbe: # opt
+        httpGet:
+          path: /ready
+          port: 80
+      imagePullPolicy: Always # opt
+      command: ["nginx"] # opt
+      args: ["-g", "daemon off;"]
+  volumes: # opt
+    - name: data
+      emptyDir: {}
+  restartPolicy: Always # opt
+  nodeSelector: # opt
+    disk: ssd
+  tolerations: # opt
+    - key: "gpu"
+      operator: Exists
+  serviceAccountName: sa # opt
+  initContainers: # opt
+    - name: init
+      image: busybox

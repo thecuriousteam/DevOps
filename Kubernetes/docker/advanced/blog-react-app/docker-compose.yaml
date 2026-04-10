@@ -1,0 +1,13 @@
+version: "3.1"
+services:
+  blog-frontend:
+    # when taking from registry
+    # image: myrepo/myapp:v1
+    # when taking from specific source
+    build:
+      context: .
+      dockerfile: Dockerfile.adv.dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_URL=http://localhost:3000

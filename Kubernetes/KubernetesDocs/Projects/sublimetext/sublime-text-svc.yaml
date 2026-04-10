@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: sublimetext
+  name: sublimetext
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 6901
+  selector:
+    app: sublimetext
+  type: NodePort

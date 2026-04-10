@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/compose-spec/compose-spec/master/schema/compose-spec.json
+# basic docker compose syntax
+
+# 👉 SIP-EV formula
+version: "<version>" 
+
+services:
+  service_name_1:
+    image: "<image_name>"
+    ports:
+      - "<port_number>:80"
+    volumes:
+      - "<volume_name>:<volume_path>"
+      - "<volume_name_2>:<volume_path_2>"
+    environment:
+      - "<environment_variable_name>=<environment_variable_value>"
+    networks:
+      - "<network_name>"
+    depends_on:
+      - "<dependency_service_name>"
+  service_name_2:
+    image: "<image_name_2>"
+    ports:
+      - "<port_number_2>:80"
+    volumes:
+      - "<volume_name_2>:<volume_path_2>"
+    environment:
+      - "<environment_variable_name_2>=<environment_variable_value_2>"
+    networks:
+      - "<network_name_2>"
+    depends_on:
+      - "<dependency_service_name_2>"

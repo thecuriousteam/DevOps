@@ -1,0 +1,12 @@
+apiVersion: v1 # API version
+kind: Pod # Resource type
+
+metadata: # Identity
+  name: <pod-name>
+  labels:
+    <key>: <value>
+
+spec: # Actual config
+  containers:
+    - name: <container-name>
+      image: <image>

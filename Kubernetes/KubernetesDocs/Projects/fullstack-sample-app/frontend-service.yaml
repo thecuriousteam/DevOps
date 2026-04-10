@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2026-04-10T05:21:21Z"
+  labels:
+    app: inspicon-frontend
+  name: inspicon-frontend
+  namespace: default
+  resourceVersion: "81133"
+  uid: bbde262d-3db3-4225-be2d-7f3e54dbe7eb
+spec:
+  clusterIP: 10.97.167.18
+  clusterIPs:
+  - 10.97.167.18
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 31326
+    port: 80
+    protocol: TCP
+    targetPort: 5678
+  selector:
+    app: inspicon-frontend
+  sessionAffinity: None
+  type: NodePort

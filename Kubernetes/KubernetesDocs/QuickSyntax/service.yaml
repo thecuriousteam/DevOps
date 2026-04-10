@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-svc # req
+  namespace: default # opt
+  labels: # opt
+    app: nginx
+  annotations: # opt
+    service.beta...: nlb
+spec:
+  ports: # req
+    - port: 80 # req
+      targetPort: 8080 # opt
+      protocol: TCP # opt
+      name: http # opt
+      nodePort: 30080 # opt (NP/LB)
+  selector: # opt*
+    app: nginx
+  type:
+    ClusterIP # opt (def)
+    # ClusterIP|NodePort
+    # LoadBalancer|ExternalName
+  clusterIP: None # opt (headless)
+  externalName: x.com # opt (EN type)
+  sessionAffinity: # opt
+    ClientIP
+  externalTrafficPolicy: # opt
+    Local
+  loadBalancerIP: x.x # opt (LB)

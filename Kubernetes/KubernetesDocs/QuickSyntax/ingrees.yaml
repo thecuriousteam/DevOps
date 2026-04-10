@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress # req
+  namespace: default # opt
+  annotations: # opt
+    nginx.ingress../rewrite-target: /
+    nginx.ingress../ssl-redirect: "true"
+    nginx.ingress../proxy-body-size: 10m
+spec:
+  ingressClassName: nginx # opt
+  tls: # opt
+    - hosts:
+        - myapp.com
+      secretName: tls-sec
+  defaultBackend: # opt
+    service:
+      name: default-svc
+      port:
+        number: 80
+  rules: # opt*
+    - host: myapp.com # opt
+      http:
+        paths: # req
+          - path: / # req
+            pathType:
+              Prefix # req
+              # Prefix|Exact|ImplementationSpecific
+            backend: # req
+              service:
+                name: my-svc
+                port:
+                  number: 80

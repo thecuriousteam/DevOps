@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2026-04-10T05:24:09Z"
+  labels:
+    app: inspicon-backend
+  name: inspicon-backend
+  namespace: default
+  resourceVersion: "81307"
+  uid: de43a134-45f0-43a2-9471-f6f7cc59b748
+spec:
+  clusterIP: 10.111.32.92
+  clusterIPs:
+  - 10.111.32.92
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - nodePort: 30721
+    port: 80
+    protocol: TCP
+    targetPort: 5678
+  selector:
+    app: inspicon-backend
+  sessionAffinity: None
+  type: NodePort

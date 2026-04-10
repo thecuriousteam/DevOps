@@ -1,0 +1,42 @@
+# normal yaml file
+name: "nginx"
+image: "nginx:latest"
+
+# list of yaml files
+ports:
+  - containerPort: 80
+  - containerPort: 443
+
+tools:
+  - Docker
+  - Kubernetes
+  - Jenkins
+
+# map of yaml files
+env:
+  - name: "ENV"
+    value: "development"
+
+# nested map of yaml files
+person:
+  name: John
+  skills:
+    - Docker
+    - AWS
+
+# nested yaml files
+spec:
+  containers:
+    - name: nginx
+
+# sample pod.yaml file
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx:latest
