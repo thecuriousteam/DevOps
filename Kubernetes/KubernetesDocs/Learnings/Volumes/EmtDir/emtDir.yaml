@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: busybox-write
+  name: busybox-write
+spec:
+  containers:
+    - image: busybox
+      name: busybox-write
+      command:
+        ["sh", "-c", "echo 'Hello from busybox' > data/hello.txt; sleep 3600"]
+      volumeMounts:
+        - mountPath: /data # container sees it here
+          name: shared-data
+    - image: busybox
+      name: busybox-read
+      command: ["sh", "-c", "sleep 5; cat data/hello.txt; sleep 3600"]
+      volumeMounts:
+        - mountPath: /data # same volume, different container
+          name: shared-data
+  volumes:
+    - name: shared-data
+      emptyDir: {} # volume definition

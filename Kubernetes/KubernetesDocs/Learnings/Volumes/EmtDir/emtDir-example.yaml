@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: shared-pod
+  name: shared-pod
+spec:
+  containers:
+    - image: busybox
+      name: busybox-cache-write
+      command:
+        [
+          "sh",
+          "-c",
+          "while true; do echo $(date) > /shared/data.txt; sleep 5; done",
+        ]
+      volumeMounts:
+        - mountPath: /shared
+          name: shared-data
+    - image: busybox
+      name: busybox-cache-read
+      command:
+        ["sh", "-c", "while true; do cat /shared/data.txt; sleep 5; done"]
+      volumeMounts:
+        - mountPath: /shared
+          name: shared-data
+  volumes:
+    - name: shared-data
+      emptyDir: {}

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: busybox-hostpath
+  name: busybox-hostpath
+spec:
+  containers:
+    - image: busybox
+      name: busybox-hostpath
+      command: ["sh", "-c", "echo 'Node data' > /mydata/data.txt; sleep 50;"]
+      volumeMounts:
+        - mountPath: /mydata
+          name: mydata
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+
+  # attach hostpath volume
+  volumes:
+    - name: mydata
+      hostPath:
+        path: /tmp/mydata
+        type: DirectoryOrCreate
