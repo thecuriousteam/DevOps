@@ -1,0 +1,13 @@
+# Step 1 — PersistentVolume (the actual disk)
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes: # one node can read/write
+    - ReadWriteOnce
+  storageClassName: "manual" # empty string means default storage class
+  hostPath:
+    path: /tmp/data

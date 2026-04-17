@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: busybox-iap
+  name: busybox-iap
+spec:
+  containers:
+    - image: busybox
+      name: busybox-iap
+      command: ["sh", "-c", "cat /etc/config/iap-config; sleep 3000;"]
+      volumeMounts:
+        - mountPath: /etc/config
+          name: iap-config
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  volumes:
+    - name: iap-config
+      configMap:
+        name: iap-config

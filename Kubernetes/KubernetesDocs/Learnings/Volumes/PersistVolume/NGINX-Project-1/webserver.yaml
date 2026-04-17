@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: web-server
+  name: web-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-server
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: web-server
+    spec:
+      containers:
+        - image: nginx:latest
+          name: nginx
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: webserver-storage
+      volumes:
+        - name: webserver-storage
+          persistentVolumeClaim:
+            claimName: webserver-pvc

@@ -1,0 +1,12 @@
+# Step 2 — PersistentVolumeClaim (pod requests storage)
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: "manual" # empty string means default storage class
+  resources:
+    requests:
+      storage: 500Mi # asking for 500Mi out of 1Gi PV
