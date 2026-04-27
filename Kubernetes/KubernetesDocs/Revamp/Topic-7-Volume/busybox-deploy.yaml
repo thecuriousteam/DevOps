@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: busybox
+  name: busybox
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: busybox
+    spec:
+      containers:
+        - image: busybox
+          name: busybox
+          command:
+            ["/bin/sh", "-c", 'echo "Hello World Nandan" > /mnt/data/hello.txt']
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+            limits:
+              cpu: "200m"
+              memory: "200Mi"
+          volumeMounts:
+            - mountPath: /mnt/data # -> you are mounting the volume to the container
+              name: data-volume
+      volumes:
+        - name: data-volume
+          persistentVolumeClaim: # -> you are claiming the volume from the PVC
+            claimName: busybox-pvc
