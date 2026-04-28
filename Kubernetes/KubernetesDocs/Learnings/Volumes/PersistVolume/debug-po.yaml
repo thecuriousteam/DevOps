@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-inspector
+spec:
+  containers:
+  - name: inspector
+    image: busybox
+    command: ["sleep", "3600"]
+    volumeMounts:
+    - name: data
+      mountPath: /inspect
+  volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: my-pvc   # reuse existing PVC
