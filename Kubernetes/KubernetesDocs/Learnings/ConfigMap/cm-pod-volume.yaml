@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: pod-volume
+  name: pod-volume
+spec:
+  containers:
+  - image: busybox
+    name: pod-volume
+    command: ["sh", "-c", "ls /etc/config && echo '---' && cat /etc/config/APP_ENV && echo && cat /etc/config/LOG_LEVEL && sleep 3600"]
+
+    volumeMounts:
+      - mountPath: /etc/config
+        name: configmap-volume
+  restartPolicy: Always
+  volumes:
+    - name: configmap-volume
+      configMap:
+        name: app-config
+status: {}

@@ -1,0 +1,9 @@
+# Create a ConfigMap (imperative + declarative)
+apiVersion: v1
+data:
+  LOG_LEVEL: debug
+  SERVER_NAME: IAP_Prod
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: default
