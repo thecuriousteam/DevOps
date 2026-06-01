@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: apache-webserver
+  name: apache-webserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache-webserver
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: apache-webserver
+    spec:
+      containers:
+      - image: httpd:latest
+        name: httpd
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
+
