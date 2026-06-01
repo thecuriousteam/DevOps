@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: webserver
+    env: dev
+  name: sidecar-po-example
+spec:
+  containers:
+  - image: httpd:latest
+    name: sidecar-po-example
+    ports:
+    - containerPort: 80
+    resources: {}
+  - image: busybox
+    name: busybox-sidecar
+    command: ["sh", "-c", "while true; do echo hello; sleep 5; done"]
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

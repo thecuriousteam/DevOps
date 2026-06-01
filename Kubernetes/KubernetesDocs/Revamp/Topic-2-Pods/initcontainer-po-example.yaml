@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: webserver
+    env: dev
+  name: init-container-po
+spec:
+  initContainers:
+    - name: init-container
+      image: busybox
+      command: ["sh", "-c","echo Initializing..."]
+  containers:
+  - image: httpd:latest
+    name: main-container
+    ports:
+    - containerPort: 80
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always

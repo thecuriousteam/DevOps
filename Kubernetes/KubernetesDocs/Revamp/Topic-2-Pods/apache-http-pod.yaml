@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    --app: web
+    env: dev
+  name: apache-webserver
+spec:
+  containers:
+  - image: httpd:latest
+    name: apache-webserver
+    ports:
+    - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+
+# k run apache-webserver --image=httpd:latest --port=80 -l --app=web,env=dev --dry-run=client -o yaml > apache-http-pod.yaml
