@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: todoapp-client
+  name: todoapp-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todoapp-client
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: todoapp-client
+    spec:
+      containers:
+      - image: inspirationapp/todo-client:dev3
+        name: todo-client
+        env:
+        - name: VITE_API_URL
+          value: http://backend.todoapp.com
+        ports:
+        - containerPort: 5173

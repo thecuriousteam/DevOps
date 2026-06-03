@@ -40,3 +40,9 @@ println "Deploying to environment: ${deployEnv}"
 // findAll -> Find all matching elements.
 def requiredEnvs = envs.findAll {it=="dev"} 
 println "Required environments: ${requiredEnvs}"
+
+// collect
+
+def features = ['feature1', 'feature2', 'feature3']
+def featureMap = features.collect{it + '_R1'}
+println "Feature Map: ${featureMap}"
