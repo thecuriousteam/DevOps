@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: busybox-emtdir
+  name: busybox-emtdir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox-emtdir
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: busybox-emtdir
+    spec:
+      containers:
+      - image: busybox
+        name: busybox-container-1
+        command: ["sh", "-c", "echo 'Hello from busybox container-1' > /data/hello.txt; sleep 3600"]
+        volumeMounts:
+          - mountPath: /data
+            name: data-volume
+      - image: busybox
+        name: busybox-container-2
+        command: ["sh", "-c", "echo 'Hello from busybox container-2' > /data/hello.txt; sleep 3600"]
+        volumeMounts:
+          - mountPath: /data
+            name: data-volume
+
+      # both containers will share the same volume here -> container-2 overwrites the file created by container-1
+      volumes:
+        - name: data-volume
+          emptyDir: {}
+
+
+# volumeMounts.name
+# MUST MATCH
+# volumes.name

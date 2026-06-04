@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: busybox-hostpath
+  name: busybox-hostpath
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busybox-hostpath
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: busybox-hostpath
+    spec:
+      containers:
+      - image: busybox
+        name: busybox-container-1
+        command: ["sh", "-c", "echo 'Hello from busybox container-1' > /mnt/container-1/container-1.txt; sleep 3600"]
+        
+        # this is mounting path inside the container
+        volumeMounts:
+          - mountPath: /mnt/container-1
+            name: logs-volume
+      - image: busybox
+        name: busybox-container-2
+        command: ["sh", "-c", "echo 'Hello from busybox container-2' > /mnt/container-2/container-2.txt; sleep 3600"]
+      
+        # this is mounting path inside the container to the hostPath /mnt/logs -> /mnt/logs is the hostPath volume
+        volumeMounts:
+          - mountPath: /mnt/container-2
+            name: logs-volume
+
+      # both containers data will be stored in hostPath /mnt/logs as container-1 and container-2
+      volumes:
+        - name: logs-volume
+          hostPath:
+            path: /mnt/logs
+            type: DirectoryOrCreate
