@@ -8,5 +8,5 @@ spec:
   containers:
     - image: nginx
       name: nginx-pod
-  dnsPolicy: ClusterFirst
-  restartPolicy: Always
+      ports:
+        - containerPort: 80

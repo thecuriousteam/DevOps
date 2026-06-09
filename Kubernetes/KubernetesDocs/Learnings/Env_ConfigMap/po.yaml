@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    run: nginx-pod2
+  name: nginx-pod2
+spec:
+  containers:
+  - image: nginx
+    name: nginx-pod2
+
+    # usage of configmap inside pod (individual injecting env variables to pod)
+    # env:
+    # - name: APP_LOGS
+    #   valueFrom:
+    #     configMapKeyRef:
+    #       key: APP_LOGS
+    #       name: dev-config
+    # - name: APP_VERSION
+    #   valueFrom:
+    #     configMapKeyRef:
+    #       key: APP_VERSION
+    #       name: dev-config
+    
+    # envFrom usage of configmap inside pod (injecting all env variables from configmap to pod)
+    envFrom:
+      - configMapRef:
+          name: dev-config
+          
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+
+---
+apiVersion: v1
+data:
+  APP_LOGS: debug
+  APP_VERSION: "1.0"
+kind: ConfigMap
+metadata:
+  name: dev-config
